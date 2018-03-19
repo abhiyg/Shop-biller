@@ -1,0 +1,22 @@
+---
+applications:
+  - name: starter-Seed_app
+    buildpack: https://github.com/muymoo/staticfile-buildpack.git
+    path: dist
+    memory: 64M
+    stack: cflinuxfs2
+
+#---
+#applications:
+#  - name: PredixSeedApp
+#    buildpack: predix_openresty_buildpack
+#    path: dist
+#    memory: 64M
+#    stack: cflinuxfs2
+#    services:
+#            - redis_212439021 # change this to your redis service instance name
+#            - seed_app_view # change this to your view service instance name
+#            -
+#    env:
+#      UAA_SERVER_URL: https://c78e986f-1398-44de-8507-c812a374dec2.predix-uaa.run.aws-usw02-pr.ice.predix.io # change to your UAA instance url
+#      REDIS: redis-4

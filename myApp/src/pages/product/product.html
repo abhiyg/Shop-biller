@@ -1,0 +1,125 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>Product Details</ion-title>
+        <!--<span class="glyphicon glyphicon-log-out" style="float:right">Exit</span>-->
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <div id="ProductTableContainer" class="divTableContainer">
+        <table class="table table-bordered table-hover" id="tableAddRow">
+            <thead>
+                <tr>
+                    <th>Item#</th>
+                    <th>Description</th>
+                    <th>Quantity</th>
+                    <th>Discount %</th>
+                    <th>Price/Item</th>
+                    <th>Tax %</th>
+                    <th>Total Price</th>
+                    <th style="width:10px">
+                        <span class="glyphicon glyphicon-plus pull-right addBtn"
+                              (click)="addNewProduct()"></span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="divRow" *ngFor="let prod of products; let i = index">
+                    <td class="indexNumber">{{i+1}}
+                    <td>
+                        <input class="form-control minWd180px" type="text" name="desc" [(ngModel)]="prod.description" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="number" name="qty"
+                               (keyup)="calculateItemPrice(prod)"
+                               [(ngModel)]="prod.quantity" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="number" name="disc"
+                               (keyup)="calculateItemPrice(prod)"
+                               [(ngModel)]="prod.discount" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="number" name="pricePerQty"
+                               (keyup)="calculateItemPrice(prod)"
+                               [(ngModel)]="prod.pricePerQty" />
+                    </td>
+                    <td>
+                        <input class="form-control minWd80px" type="number" name="tax"
+                               (keyup)="calculateItemPrice(prod)"
+                               [(ngModel)]="prod.tax" />
+
+                    </td>
+                    <td>
+                        <input class="form-control minWd80px" type="text" name="price"
+                               (keyup)="calculateItemPrice(prod)"
+                               [(ngModel)]="prod.price" readonly />
+                    </td>
+                    <td>
+                        <span class="glyphicon glyphicon-remove margin50pc pull-right"
+                              *ngIf="products && products.length>1"
+                              (click)="removeProduct(i)"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <button class="glyphicon glyphicon-plus addNew"
+              (click)="addNewProduct()">Add</button>
+    </div>
+    <div id="divTotalInfoContainer" class="divTotalInfoContainer">
+        <div class="form-group row">
+            <label class="control-label col-xs-4 marginTop1pc">Additional Tax-I</label>
+            <div class="col-xs-8">
+                <input class="form-control maxWd50pc" type="number"
+                       [(ngModel)]="vat1"
+                       name="VAT1" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="control-label col-xs-4 marginTop1pc">Additional Tax-II</label>
+            <div class="col-xs-8">
+                <input class="form-control maxWd50pc" type="number"
+                       [(ngModel)]="vat2"
+                       name="VAT2" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="control-label col-xs-4 marginTop1pc">Misc.</label>
+            <div class="col-xs-8">
+                <input class="form-control maxWd50pc" type="number"
+                       [(ngModel)]="vatMisc"
+                       name="Miscellaneous" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="control-label col-xs-4 marginTop1pc">Total Bill</label>
+            <div class="col-xs-8">
+                <input class="form-control maxWd50pc" type="text" name="TotalBill"
+                       [value]="totalBillAmout"
+                       readonly />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-xs-3">
+                <button class="btn" hidden="hidden" (click)="showAlert()">Clear</button>
+            </div>
+            <div class="col-xs-3">
+                <button class="btn btn-primary" (click)="calculateTotal()">Generate Bill</button>
+            </div>
+            <div class="col-xs-3">
+                <button class="btn btn-primary"
+                        [disabled]="isDownloadDisabled"
+                        hidden="hidden"
+                         (click)="download()">Download Bill</button>
+            </div>
+            <div class="col-xs-3">
+                <button class="btn btn-primary" hidden="hidden" (click)="save()">Save</button>
+            </div>
+            <!--<div class="col-xs-3">
+                <button class="btn btn-primary" (click)="emailAlert()">e-mail Bill</button>
+            </div>-->
+        </div>
+    </div>
+</ion-content>
